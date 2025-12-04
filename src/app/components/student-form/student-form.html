@@ -1,0 +1,20 @@
+<div class="container">
+  <h2>{{ form.value.id ? 'Edit Student' : 'Add Student' }}</h2>
+
+  <form [formGroup]="form" (ngSubmit)="saveStudent()">
+
+    <label>Name</label>
+    <input formControlName="name" placeholder="Enter name">
+
+    <label>Email</label>
+    <input formControlName="email" placeholder="Enter email">
+
+    <label>Course</label>
+    <input formControlName="course" placeholder="Enter course">
+
+    <button type="submit" class="btn-save">
+      {{ form.value.id ? 'Update' : 'Save' }}
+    </button>
+
+  </form>
+</div>
