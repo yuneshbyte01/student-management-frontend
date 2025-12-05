@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StudentService } from '../../services/student';
-import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-student-form',
@@ -10,7 +10,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
   templateUrl: './student-form.html',
   styleUrls: ['./student-form.css']
 })
-export class StudentForm {
+export class StudentForm implements OnInit {
 
   form!: FormGroup;
 
@@ -22,11 +22,15 @@ export class StudentForm {
   ) {}
 
   ngOnInit() {
+    this.buildForm();
+  }
+
+  private buildForm() {
     this.form = this.fb.group({
       id: [''],
-      name: [''],
-      email: [''],
-      course: ['']
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      course: ['', Validators.required]
     });
 
     const id = this.route.snapshot.params['id'];
@@ -39,14 +43,19 @@ export class StudentForm {
   }
 
   saveStudent() {
-    const studentData = this.form.value;
+    let studentData = this.form.value;
 
     if (studentData.id) {
       this.studentService.update(studentData.id, studentData)
         .subscribe(() => this.router.navigate(['/students']));
     } else {
+      delete studentData.id;
       this.studentService.create(studentData)
         .subscribe(() => this.router.navigate(['/students']));
     }
+  }
+
+  cancel() {
+    this.router.navigate(['/students']);
   }
 }

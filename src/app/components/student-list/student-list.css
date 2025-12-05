@@ -55,4 +55,47 @@ thead tr {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  margin-right: 5px;
 }
+
+.view-btn {
+  padding: 6px 12px;
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.details-box {
+  margin-top: 20px;
+  padding: 20px;
+  background: #e8f3ff;
+  border: 2px solid #90c4ff;
+  border-radius: 8px;
+  color: #003f7f;
+}
+
+.details-box h3 {
+  margin-bottom: 10px;
+  color: #0059b3;
+}
+
+.details-box p {
+  margin: 5px 0;
+}
+
+.details-box button {
+  margin-top: 15px;
+  padding: 8px 14px;
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.details-box button:hover {
+  background: #ff4c4c;
+}
+

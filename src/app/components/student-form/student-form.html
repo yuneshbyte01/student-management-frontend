@@ -12,9 +12,13 @@
     <label>Course</label>
     <input formControlName="course" placeholder="Enter course">
 
-    <button type="submit" class="btn-save">
-      {{ form.value.id ? 'Update' : 'Save' }}
-    </button>
-
+    <div class="btn-container">
+      <button type="submit" class="btn-save" [disabled]="form.invalid">
+        {{ form.value.id ? 'Update' : 'Save' }}
+      </button>
+      <button type="button" class="btn-cancel" (click)="cancel()">
+        Cancel
+      </button>
+    </div>
   </form>
 </div>

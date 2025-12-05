@@ -3,6 +3,15 @@
 
   <button routerLink="/add" class="add-btn">+ Add Student</button>
 
+  <div *ngIf="selectedStudent()" class="details-box">
+    <h3>Student Details</h3>
+    <p><strong>ID:</strong> {{ selectedStudent()?.id }}</p>
+    <p><strong>Name:</strong> {{ selectedStudent()?.name }}</p>
+    <p><strong>Email:</strong> {{ selectedStudent()?.email }}</p>
+    <p><strong>Course:</strong> {{ selectedStudent()?.course }}</p>
+    <button (click)="selectedStudent.set(null)">Clear</button>
+  </div>
+
   <table>
     <thead>
       <tr>
@@ -23,6 +32,7 @@
         <td>
           <button [routerLink]="['/edit', s.id]" class="edit-btn">Edit</button>
           <button (click)="deleteStudent(s.id)" class="delete-btn">Delete</button>
+          <button (click)="viewStudent(s.id)" class="view-btn">View</button>
         </td>
       </tr>
     </tbody>
