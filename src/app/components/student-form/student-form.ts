@@ -2,11 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StudentService } from '../../services/student';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-student-form',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgIf],
   templateUrl: './student-form.html',
   styleUrls: ['./student-form.css']
 })

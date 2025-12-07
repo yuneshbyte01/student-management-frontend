@@ -81,3 +81,10 @@ input:focus {
 .btn-cancel:hover {
   background-color: #c0392b;
 }
+
+.error-msg {
+  color: red;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
