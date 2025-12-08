@@ -6,7 +6,6 @@
     <!-- NAME -->
     <label>Name</label>
     <input formControlName="name" placeholder="Enter name">
-
     <div *ngIf="form.get('name')?.touched && form.get('name')?.invalid" class="error-msg">
       Name is required.
     </div>
@@ -14,7 +13,6 @@
     <!-- EMAIL -->
     <label>Email</label>
     <input formControlName="email" placeholder="Enter email">
-
     <div *ngIf="form.get('email')?.touched && form.get('email')?.invalid" class="error-msg">
       <span *ngIf="form.get('email')?.errors?.['required']">Email is required.</span>
       <span *ngIf="form.get('email')?.errors?.['email']">Email is invalid.</span>
@@ -23,7 +21,6 @@
     <!-- COURSE -->
     <label>Course</label>
     <input formControlName="course" placeholder="Enter course">
-
     <div *ngIf="form.get('course')?.touched && form.get('course')?.invalid" class="error-msg">
       Course is required.
     </div>
@@ -33,11 +30,9 @@
       <button type="submit" class="btn-save" [disabled]="form.invalid">
         {{ form.value.id ? 'Update' : 'Save' }}
       </button>
-
       <button type="button" class="btn-cancel" (click)="cancel()">
         Cancel
       </button>
     </div>
-
   </form>
 </div>
