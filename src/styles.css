@@ -1,1 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+/* Shared Snackbar Base Style */
+.snack-success, .snack-error {
+  color: white !important;
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.3px;
+  border-radius: 8px !important;
+  padding: 10px 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.2) !important;
+}
+
+/* SUCCESS STYLE */
+.snack-success {
+  background: linear-gradient(135deg, #2e7d32, #43a047) !important;
+}
+
+/* ERROR STYLE */
+.snack-error {
+  background: linear-gradient(135deg, #c62828, #e53935) !important;
+}
+
+/* Optional: MAKE THE CLOSE BUTTON WHITE */
+.mat-mdc-snack-bar-action {
+  color: white !important;
+  font-weight: bold;
+}

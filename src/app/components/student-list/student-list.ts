@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NgFor, NgIf } from '@angular/common';
 import { StudentViewDialog } from '../student-view-dialog/student-view-dialog';
 import {StudentDeleteDialog} from '../student-delete-dialog/student-delete-dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-student-list',
@@ -19,7 +20,8 @@ export class StudentList implements OnInit {
 
   constructor(
     private studentService: StudentService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -52,12 +54,21 @@ export class StudentList implements OnInit {
   deleteStudent(id: number) {
     this.studentService.delete(id).subscribe({
       next: () => {
-        alert('Student deleted successfully!');
-        this.loadStudents();
+        this.students.set(this.students().filter(s => s.id !== id));
+        this.snackBar.open('Student deleted successfully!', 'Close', {
+          duration: 2500,
+          horizontalPosition: 'right',
+          verticalPosition: 'bottom',
+          panelClass: ['snack-success'],
+        });
       },
-      error: (error) => {
-        console.error(error);
-        alert('Error deleting student');
+      error: () => {
+        this.snackBar.open('Error deleting student', 'Close', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'bottom',
+          panelClass: ['snack-error'],
+        });
       },
     });
   }
