@@ -2,7 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { StudentService } from '../../services/student';
 import { RouterModule } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor } from '@angular/common';
 import { StudentViewDialog } from '../student-view-dialog/student-view-dialog';
 import {StudentDeleteDialog} from '../student-delete-dialog/student-delete-dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -10,12 +10,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-student-list',
   standalone: true,
-  imports: [NgFor, NgIf, RouterModule],
+  imports: [NgFor, RouterModule],
   templateUrl: './student-list.html',
   styleUrls: ['./student-list.css'],
 })
 export class StudentList implements OnInit {
   students = signal<any[]>([]);
+  selectedStudent = signal<any | null>(null);
   title = 'Student List';
 
   constructor(
@@ -74,17 +75,8 @@ export class StudentList implements OnInit {
   }
 
   viewStudent(id: number) {
-    this.studentService.getById(id).subscribe({
-      next: (student) => {
-        this.dialog.open(StudentViewDialog, {
-          width: '400px',
-          data: student,
-        });
-      },
-      error: (error) => {
-        console.error(error);
-        alert('Error fetching student details');
-      },
+    this.studentService.getById(id).subscribe((student) => {
+      this.selectedStudent.set(student);
     });
   }
 }
