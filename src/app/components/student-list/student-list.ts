@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { NgFor, NgIf } from '@angular/common';
 import { StudentViewDialog } from '../student-view-dialog/student-view-dialog';
+import {StudentDeleteDialog} from '../student-delete-dialog/student-delete-dialog';
 
 @Component({
   selector: 'app-student-list',
@@ -32,6 +33,19 @@ export class StudentList implements OnInit {
         console.error(error);
         alert('Error loading students');
       },
+    });
+  }
+
+  confirmDeleteStudent(student: any) {
+    const dialogRef = this.dialog.open(StudentDeleteDialog, {
+      width: '350px',
+      data: { id: student.id, name: student.name }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteStudent(student.id);
+      }
     });
   }
 

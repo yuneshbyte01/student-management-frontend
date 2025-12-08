@@ -22,7 +22,7 @@
         <td>{{ s.course }}</td>
         <td>
           <button [routerLink]="['/edit', s.id]" class="edit-btn">Edit</button>
-          <button (click)="deleteStudent(s.id)" class="delete-btn">Delete</button>
+          <button (click)="confirmDeleteStudent(s)" class="delete-btn">Delete</button>
           <button (click)="viewStudent(s.id)" class="view-btn">View</button>
         </td>
       </tr>
