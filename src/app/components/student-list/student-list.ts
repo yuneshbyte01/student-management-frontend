@@ -1,7 +1,9 @@
-import {Component, OnInit, signal} from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { StudentService } from '../../services/student';
 import { RouterModule } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import { NgFor, NgIf } from '@angular/common';
+import { StudentViewDialog } from '../student-view-dialog/student-view-dialog';
 
 @Component({
   selector: 'app-student-list',
@@ -11,38 +13,53 @@ import { NgFor, NgIf } from '@angular/common';
   styleUrls: ['./student-list.css'],
 })
 export class StudentList implements OnInit {
-
   students = signal<any[]>([]);
-  selectedStudent = signal<any | null>(null); // simple signal for viewing
+  title = 'Student List';
 
-  constructor(private studentService: StudentService) {}
+  constructor(
+    private studentService: StudentService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.loadStudents();
   }
 
   loadStudents() {
-    this.studentService.getAll().subscribe((response: any) => {
-      this.students.set(response);
-    }, error => {
-      console.error(error);
-      alert('Error loading students');
+    this.studentService.getAll().subscribe({
+      next: (response: any) => this.students.set(response),
+      error: (error) => {
+        console.error(error);
+        alert('Error loading students');
+      },
     });
   }
 
   deleteStudent(id: number) {
-    this.studentService.delete(id).subscribe(() => {
-      alert('Student deleted successfully!');
-      this.loadStudents();
-    }, error => {
-      console.error(error);
-      alert('Error deleting student');
+    this.studentService.delete(id).subscribe({
+      next: () => {
+        alert('Student deleted successfully!');
+        this.loadStudents();
+      },
+      error: (error) => {
+        console.error(error);
+        alert('Error deleting student');
+      },
     });
   }
 
   viewStudent(id: number) {
-    this.studentService.getById(id).subscribe((student) => {
-      this.selectedStudent.set(student);
+    this.studentService.getById(id).subscribe({
+      next: (student) => {
+        this.dialog.open(StudentViewDialog, {
+          width: '400px',
+          data: student,
+        });
+      },
+      error: (error) => {
+        console.error(error);
+        alert('Error fetching student details');
+      },
     });
   }
 }

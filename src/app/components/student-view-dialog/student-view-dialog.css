@@ -1,0 +1,38 @@
+.details-box {
+  margin-top: 0;
+  padding: 20px;
+  background: #e8f3ff;
+  border: 2px solid #90c4ff;
+  border-radius: 4px;
+  color: #003f7f;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.details-box h3 {
+  margin-bottom: 15px;
+  color: #0059b3;
+  text-align: center;
+}
+
+.details-box p {
+  margin: 6px 0;
+  font-size: 15px;
+}
+
+.details-box button {
+  margin-top: 15px;
+  padding: 8px 14px;
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.details-box button:hover {
+  background: #ff4c4c;
+}
