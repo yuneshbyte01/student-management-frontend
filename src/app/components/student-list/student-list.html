@@ -1,40 +1,65 @@
-<div class="container">
-  <h2>Student List</h2>
+<div class="container mt-4 p-4 bg-white rounded shadow">
 
-  <button routerLink="/add" class="add-btn">+ Add Student</button>
+  <h2 class="text-center mb-4">Student List</h2>
 
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Course</th>
-        <th>Actions</th>
-      </tr>
+  <!-- Add Button -->
+  <button routerLink="/add"
+          class="btn btn-success mb-3 px-3 py-2 rounded">
+    <i class="bi bi-person-fill-add fs-5"></i>
+  </button>
+
+  <table class="table table-bordered table-hover text-center align-middle mt-3">
+    <thead class="table-light">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Course</th>
+      <th>Actions</th>
+    </tr>
     </thead>
 
     <tbody>
-      <tr *ngFor="let s of students()">
-        <td>{{ s.id }}</td>
-        <td>{{ s.name }}</td>
-        <td>{{ s.email }}</td>
-        <td>{{ s.course }}</td>
-        <td>
-          <button [routerLink]="['/edit', s.id]" class="edit-btn">Edit</button>
-          <button (click)="confirmDeleteStudent(s)" class="delete-btn">Delete</button>
-          <button (click)="viewStudent(s.id)" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#studentDetailsModal">View</button>
-        </td>
-      </tr>
+    <tr *ngFor="let s of students()">
+      <td>{{ s.id }}</td>
+      <td>{{ s.name }}</td>
+      <td>{{ s.email }}</td>
+      <td>{{ s.course }}</td>
+
+      <td>
+
+        <!-- Edit -->
+        <button [routerLink]="['/edit', s.id]"
+                class="btn btn-primary btn-sm me-2 mb-2 px-3 py-1 rounded">
+          <i class="bi bi-pen-fill fs-6"></i>
+        </button>
+
+        <!-- Delete -->
+        <button (click)="selectStudentForDelete(s.id)"
+                class="btn btn-danger btn-sm me-2 mb-2 px-3 py-1 rounded"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteModal">
+          <i class="bi bi-person-x-fill fs-6"></i>
+        </button>
+
+        <!-- View -->
+        <button (click)="viewStudent(s.id)"
+                class="btn btn-warning btn-sm mb-2 px-3 py-1 rounded">
+          <i class="bi bi-eye-fill fs-6"></i>
+        </button>
+
+      </td>
+    </tr>
     </tbody>
   </table>
 
-  <div class="modal fade" id="studentDetailsModal" tabindex="-1" aria-labelledby="studentDetailsLabel" aria-hidden="true">
+  <!-- Student Details Modal -->
+  <div class="modal fade" id="studentDetailsModal" tabindex="-1">
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content rounded">
 
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="studentDetailsLabel">Student Details</h1>
+        <div class="modal-header bg-light">
+          <h5 class="modal-title">Student Details</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
@@ -46,7 +71,9 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          <button type="button"
+                  class="btn btn-secondary px-4 py-2 rounded"
+                  data-bs-dismiss="modal">
             Close
           </button>
         </div>
@@ -55,4 +82,43 @@
     </div>
   </div>
 
+  <!-- Delete Modal -->
+  <div class="modal fade" id="deleteModal"
+       data-bs-backdrop="static"
+       data-bs-keyboard="false"
+       tabindex="-1">
+
+    <div class="modal-dialog">
+      <div class="modal-content rounded">
+
+        <div class="modal-header bg-light">
+          <h5 class="modal-title fs-5">Confirm Delete</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body text-center">
+          <p class="fw-bold">
+            Are you sure you want to delete
+            <strong>{{ selectedStudent()?.name }}</strong>?
+          </p>
+          <p class="text-danger">This action cannot be undone.</p>
+        </div>
+
+        <div class="modal-footer">
+
+          <button type="button"
+                  class="btn btn-outline-secondary px-4 py-2 rounded"
+                  data-bs-dismiss="modal">
+            Cancel
+          </button>
+
+          <button (click)="confirmDelete()"
+                  type="button"
+                  class="btn btn-danger px-4 py-2 rounded">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

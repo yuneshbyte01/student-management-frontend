@@ -3,16 +3,13 @@ import { StudentService } from '../../services/student';
 import { RouterModule } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { NgFor } from '@angular/common';
-import { StudentViewDialog } from '../student-view-dialog/student-view-dialog';
-import {StudentDeleteDialog} from '../student-delete-dialog/student-delete-dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-student-list',
   standalone: true,
   imports: [NgFor, RouterModule],
-  templateUrl: './student-list.html',
-  styleUrls: ['./student-list.css'],
+  templateUrl: './student-list.html'
 })
 export class StudentList implements OnInit {
   students = signal<any[]>([]);
@@ -39,17 +36,17 @@ export class StudentList implements OnInit {
     });
   }
 
-  confirmDeleteStudent(student: any) {
-    const dialogRef = this.dialog.open(StudentDeleteDialog, {
-      width: '350px',
-      data: { id: student.id, name: student.name }
+  selectStudentForDelete(id: number) {
+    this.studentService.getById(id).subscribe(student => {
+      this.selectedStudent.set(student);
     });
+  }
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.deleteStudent(student.id);
-      }
-    });
+  confirmDelete() {
+    const student = this.selectedStudent();
+    if (student) {
+      this.deleteStudent(student.id);
+    }
   }
 
   deleteStudent(id: number) {

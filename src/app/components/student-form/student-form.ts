@@ -9,8 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-student-form',
   standalone: true,
   imports: [ReactiveFormsModule, NgIf],
-  templateUrl: './student-form.html',
-  styleUrls: ['./student-form.css']
+  templateUrl: './student-form.html'
 })
 export class StudentForm implements OnInit {
 

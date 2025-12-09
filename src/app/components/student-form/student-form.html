@@ -1,38 +1,64 @@
-<div class="container">
-  <h2>{{ form.value.id ? 'Edit Student' : 'Add Student' }}</h2>
+<div class="container mt-4">
 
-  <form [formGroup]="form" (ngSubmit)="saveStudent()">
+  <div class="mx-auto p-4 bg-light rounded shadow-sm" style="max-width: 420px;">
 
-    <!-- NAME -->
-    <label>Name</label>
-    <input formControlName="name" placeholder="Enter name">
-    <div *ngIf="form.get('name')?.touched && form.get('name')?.invalid" class="error-msg">
-      Name is required.
-    </div>
+    <h2 class="text-center mb-3 text-dark">
+      {{ form.value.id ? 'Edit Student' : 'Add Student' }}
+    </h2>
 
-    <!-- EMAIL -->
-    <label>Email</label>
-    <input formControlName="email" placeholder="Enter email">
-    <div *ngIf="form.get('email')?.touched && form.get('email')?.invalid" class="error-msg">
-      <span *ngIf="form.get('email')?.errors?.['required']">Email is required.</span>
-      <span *ngIf="form.get('email')?.errors?.['email']">Email is invalid.</span>
-    </div>
+    <form [formGroup]="form" (ngSubmit)="saveStudent()">
 
-    <!-- COURSE -->
-    <label>Course</label>
-    <input formControlName="course" placeholder="Enter course">
-    <div *ngIf="form.get('course')?.touched && form.get('course')?.invalid" class="error-msg">
-      Course is required.
-    </div>
+      <!-- NAME -->
+      <label class="fw-semibold mt-2 mb-1">Name</label>
+      <input formControlName="name"
+             class="form-control"
+             placeholder="Enter name">
 
-    <!-- BUTTONS -->
-    <div class="btn-container">
-      <button type="submit" class="btn-save" [disabled]="form.invalid">
-        {{ form.value.id ? 'Update' : 'Save' }}
-      </button>
-      <button type="button" class="btn-cancel" (click)="cancel()">
-        Cancel
-      </button>
-    </div>
-  </form>
+      <div *ngIf="form.get('name')?.touched && form.get('name')?.invalid"
+           class="text-danger small mt-1 mb-2">
+        Name is required.
+      </div>
+
+      <!-- EMAIL -->
+      <label class="fw-semibold mt-2 mb-1">Email</label>
+      <input formControlName="email"
+             class="form-control"
+             placeholder="Enter email">
+
+      <div *ngIf="form.get('email')?.touched && form.get('email')?.invalid"
+           class="text-danger small mt-1 mb-2">
+        <span *ngIf="form.get('email')?.errors?.['required']">Email is required.</span>
+        <span *ngIf="form.get('email')?.errors?.['email']">Invalid email format.</span>
+      </div>
+
+      <!-- COURSE -->
+      <label class="fw-semibold mt-2 mb-1">Course</label>
+      <input formControlName="course"
+             class="form-control"
+             placeholder="Enter course">
+
+      <div *ngIf="form.get('course')?.touched && form.get('course')?.invalid"
+           class="text-danger small mt-1 mb-2">
+        Course is required.
+      </div>
+
+      <!-- BUTTONS -->
+      <div class="d-flex justify-content-between gap-2 mt-3">
+
+        <!-- Save Button -->
+        <button type="submit"
+                [disabled]="form.invalid"
+                class="btn btn-primary w-50 py-2 fw-semibold">
+          {{ form.value.id ? 'Update' : 'Save' }}
+        </button>
+
+        <!-- Cancel Button -->
+        <button type="button"
+                class="btn btn-danger w-50 py-2 fw-semibold"
+                (click)="cancel()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
 </div>
