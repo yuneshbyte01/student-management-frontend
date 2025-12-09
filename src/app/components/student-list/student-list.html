@@ -8,10 +8,11 @@
     <i class="bi bi-person-fill-add fs-5"></i>
   </button>
 
+  <!-- SEARCH BAR -->
   <div class="input-group mb-3">
-  <span class="input-group-text bg-primary text-white rounded-start">
-    <i class="bi bi-search"></i>
-  </span>
+    <span class="input-group-text bg-primary text-white rounded-start">
+      <i class="bi bi-search"></i>
+    </span>
 
     <input type="text"
            class="form-control rounded-end"
@@ -19,6 +20,7 @@
            (input)="onSearchChange($event)">
   </div>
 
+  <!-- TABLE -->
   <table class="table table-bordered table-hover text-center align-middle mt-3">
     <thead class="table-light">
     <tr>
@@ -38,7 +40,6 @@
       <td>{{ s.course }}</td>
 
       <td>
-
         <!-- Edit -->
         <button [routerLink]="['/edit', s.id]"
                 class="btn btn-primary btn-sm me-2 mb-2 px-3 py-1 rounded">
@@ -53,21 +54,19 @@
           <i class="bi bi-person-x-fill fs-6"></i>
         </button>
 
-        <!-- View (FIXED) -->
+        <!-- View -->
         <button (click)="viewStudent(s.id)"
                 class="btn btn-warning btn-sm mb-2 px-3 py-1 rounded"
                 data-bs-toggle="modal"
                 data-bs-target="#studentDetailsModal">
           <i class="bi bi-eye-fill fs-6"></i>
         </button>
-
       </td>
     </tr>
     </tbody>
   </table>
 
-
-  <!-- Student Details Modal -->
+  <!-- STUDENT DETAILS MODAL -->
   <div class="modal fade" id="studentDetailsModal" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content rounded">
@@ -96,8 +95,7 @@
     </div>
   </div>
 
-
-  <!-- Delete Modal -->
+  <!-- DELETE MODAL -->
   <div class="modal fade" id="deleteModal"
        data-bs-backdrop="static"
        data-bs-keyboard="false"
@@ -121,7 +119,6 @@
         </div>
 
         <div class="modal-footer">
-
           <button type="button"
                   class="btn btn-outline-secondary px-4 py-2 rounded"
                   data-bs-dismiss="modal">
@@ -137,5 +134,35 @@
       </div>
     </div>
   </div>
+
+  <!-- PAGINATION -->
+  <nav aria-label="Student pagination" class="mt-4">
+    <ul class="pagination justify-content-center">
+
+      <!-- Previous -->
+      <li class="page-item" [class.disabled]="page === 0">
+        <button class="page-link" (click)="loadPage(page - 1)">
+          <i class="bi bi-chevron-double-left"></i>
+        </button>
+      </li>
+
+      <!-- Page Numbers -->
+      <li class="page-item"
+          *ngFor="let p of pages"
+          [class.active]="p === page">
+        <button class="page-link" (click)="loadPage(p)">
+          {{ p + 1 }}
+        </button>
+      </li>
+
+      <!-- Next -->
+      <li class="page-item" [class.disabled]="page >= totalPages - 1">
+        <button class="page-link" (click)="loadPage(page + 1)">
+          <i class="bi bi-chevron-double-right"></i>
+        </button>
+      </li>
+
+    </ul>
+  </nav>
 
 </div>

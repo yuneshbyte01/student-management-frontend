@@ -40,4 +40,9 @@ export class StudentService {
   search(keyword: string) {
     return this.http.get<any[]>(`${this.baseUrl}/search?keyword=${keyword}`);
   }
+
+  // Pagination
+  getPage(page: number, size: number) {
+    return this.http.get<any>(`${this.baseUrl}/page?page=${page}&size=${size}`);
+  }
 }
