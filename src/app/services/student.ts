@@ -16,12 +16,12 @@ export class StudentService {
     return this.http.get(this.baseUrl);
   }
 
-  // Get a single student
+  // Get student by ID
   getById(id: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/${id}`);
   }
 
-  // Add a new student
+  // Create new student
   create(student: any): Observable<any> {
     return this.http.post(this.baseUrl, student);
   }
@@ -36,13 +36,13 @@ export class StudentService {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
 
-  // Search student
-  search(keyword: string) {
+  // Search students
+  search(keyword: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/search?keyword=${keyword}`);
   }
 
-  // Pagination
-  getPage(page: number, size: number) {
+  // Get a paginated student list
+  getPage(page: number, size: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/page?page=${page}&size=${size}`);
   }
 }

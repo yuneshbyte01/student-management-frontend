@@ -1,13 +1,13 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { StudentService } from '../../services/student';
 import { RouterModule } from '@angular/router';
-import { NgFor } from '@angular/common';
+import {DatePipe, NgFor} from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-student-list',
   standalone: true,
-  imports: [NgFor, RouterModule],
+  imports: [NgFor, RouterModule, DatePipe],
   templateUrl: './student-list.html'
 })
 
@@ -54,6 +54,7 @@ export class StudentList implements OnInit {
     this.page = pageIndex;
     this.loadStudents();
   }
+
   onSearchChange(event: any) {
     const keyword = event.target.value.trim();
     this.searchText.set(keyword);

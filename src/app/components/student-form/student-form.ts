@@ -32,6 +32,10 @@ export class StudentForm implements OnInit {
       id: [''],
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
+      phone: ['', Validators.required],
+      gender: ['', Validators.required],
+      dob: ['', Validators.required],
+      address: ['', Validators.required],
       course: ['', Validators.required]
     });
 
@@ -39,12 +43,24 @@ export class StudentForm implements OnInit {
 
     if (id) {
       this.studentService.getById(id).subscribe((data: any) => {
-        this.form.patchValue(data);
+
+        const formattedDob = data.dob ? data.dob.substring(0, 10) : '';
+
+        this.form.patchValue({
+          id: data.id,
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          gender: data.gender,
+          dob: formattedDob,
+          address: data.address,
+          course: data.course
+        });
       });
     }
   }
 
-  saveStudent() {
+    saveStudent() {
     let studentData = this.form.value;
 
     // UPDATE
@@ -69,14 +85,14 @@ export class StudentForm implements OnInit {
             });
           }
         });
-
-      // CREATE
-    } else {
+    }
+    // CREATE
+    else {
       delete studentData.id;
       this.studentService.create(studentData)
         .subscribe({
           next: () => {
-            this.snackBar.open('Student updated successfully!', 'Close', {
+            this.snackBar.open('Student created successfully!', 'Close', {
               duration: 2500,
               horizontalPosition: 'right',
               verticalPosition: 'bottom',
@@ -86,7 +102,7 @@ export class StudentForm implements OnInit {
             this.router.navigate(['/students']);
           },
           error: () => {
-            this.snackBar.open('Error updating student!', 'Close', {
+            this.snackBar.open('Error creating student!', 'Close', {
               duration: 3000,
               horizontalPosition: 'right',
               verticalPosition: 'bottom',

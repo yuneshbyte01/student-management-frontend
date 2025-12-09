@@ -27,6 +27,7 @@
       <th>ID</th>
       <th>Name</th>
       <th>Email</th>
+      <th>Gender</th>
       <th>Course</th>
       <th>Actions</th>
     </tr>
@@ -37,6 +38,7 @@
       <td>{{ s.id }}</td>
       <td>{{ s.name }}</td>
       <td>{{ s.email }}</td>
+      <td>{{ s.gender }}</td>
       <td>{{ s.course }}</td>
 
       <td>
@@ -80,6 +82,10 @@
           <p><strong>ID:</strong> {{ selectedStudent()?.id }}</p>
           <p><strong>Name:</strong> {{ selectedStudent()?.name }}</p>
           <p><strong>Email:</strong> {{ selectedStudent()?.email }}</p>
+          <p><strong>Phone:</strong> {{ selectedStudent()?.phone }}</p>
+          <p><strong>Gender:</strong> {{ selectedStudent()?.gender }}</p>
+          <p><strong>Date of Birth:</strong> {{ selectedStudent()?.dob | date }}</p>
+          <p><strong>Address:</strong> {{ selectedStudent()?.address }}</p>
           <p><strong>Course:</strong> {{ selectedStudent()?.course }}</p>
         </div>
 

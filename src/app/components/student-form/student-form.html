@@ -24,23 +24,76 @@
       <input formControlName="email"
              class="form-control"
              placeholder="Enter email">
-
       <div *ngIf="form.get('email')?.touched && form.get('email')?.invalid"
            class="text-danger small mt-1 mb-2">
         <span *ngIf="form.get('email')?.errors?.['required']">Email is required.</span>
         <span *ngIf="form.get('email')?.errors?.['email']">Invalid email format.</span>
       </div>
 
+      <!-- PHONE NUMBER -->
+      <label class="fw-semibold mt-2 mb-1">Phone Number</label>
+      <input formControlName="phone"
+             class="form-control"
+             placeholder="Enter phone number">
+      <div *ngIf="form.get('phone')?.touched && form.get('phone')?.invalid"
+           class="text-danger small mt-1 mb-2">
+        Phone number is required.
+      </div>
+
+      <!-- GENDER -->
+      <label class="fw-semibold mt-2 mb-1">Gender</label>
+      <div class="d-flex gap-4">
+        <div class="form-check">
+          <input type="radio" class="form-check-input" formControlName="gender" value="MALE" id="genderMale">
+          <label class="form-check-label" for="genderMale">Male</label>
+        </div>
+        <div class="form-check">
+          <input type="radio" class="form-check-input" formControlName="gender" value="FEMALE" id="genderFemale">
+          <label class="form-check-label" for="genderFemale">Female</label>
+        </div>
+        <div class="form-check">
+          <input type="radio" class="form-check-input" formControlName="gender" value="OTHER" id="genderOther">
+          <label class="form-check-label" for="genderOther">Other</label>
+        </div>
+      </div>
+      <div *ngIf="form.get('gender')?.touched && form.get('gender')?.invalid"
+           class="text-danger small mt-1 mb-2">
+        Gender is required.
+      </div>
+
+      <!-- DOB -->
+      <label class="fw-semibold mt-2 mb-1">Date of Birth</label>
+      <input type="date"
+             formControlName="dob"
+             class="form-control" />
+      <div *ngIf="form.get('dob')?.touched && form.get('dob')?.invalid"
+           class="text-danger small mt-1 mb-2">
+        Date of birth is required.
+      </div>
+
+      <!-- ADDRESS -->
+      <label class="fw-semibold mt-2 mb-1">Address</label>
+      <textarea formControlName="address"
+                class="form-control"
+                placeholder="Enter address"></textarea>
+      <div *ngIf="form.get('address')?.touched && form.get('address')?.invalid"
+           class="text-danger small mt-1 mb-2">
+        Address is required.
+      </div>
+
       <!-- COURSE -->
       <label class="fw-semibold mt-2 mb-1">Course</label>
-      <input formControlName="course"
-             class="form-control"
-             placeholder="Enter course">
-
-      <div *ngIf="form.get('course')?.touched && form.get('course')?.invalid"
-           class="text-danger small mt-1 mb-2">
-        Course is required.
-      </div>
+      <select formControlName="course" class="form-select">
+        <option value="" disabled>Select course</option>
+        <option value="BCA">BCA</option>
+        <option value="BBA">BBA</option>
+        <option value="BSC_CSIT">BSC_CSIT</option>
+        <option value="BSW">BSW</option>
+        <option value="BIM">BIM</option>
+        <option value="BHM">BHM</option>
+        <option value="BBS">BBS</option>
+        <option value="MBS">MBS</option>
+      </select>
 
       <!-- BUTTONS -->
       <div class="d-flex justify-content-between gap-2 mt-3">
