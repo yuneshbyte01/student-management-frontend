@@ -35,4 +35,9 @@ export class StudentService {
   delete(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
+
+  // Search student
+  search(keyword: string) {
+    return this.http.get<any[]>(`${this.baseUrl}/search?keyword=${keyword}`);
+  }
 }

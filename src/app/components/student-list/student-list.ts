@@ -14,7 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class StudentList implements OnInit {
   students = signal<any[]>([]);
   selectedStudent = signal<any | null>(null);
-  title = 'Student List';
+  searchText = signal('');
 
   constructor(
     private studentService: StudentService,
@@ -72,8 +72,30 @@ export class StudentList implements OnInit {
   }
 
   viewStudent(id: number) {
-    this.studentService.getById(id).subscribe((student) => {
-      this.selectedStudent.set(student);
+    this.studentService.getById(id).subscribe({
+      next: (student) => this.selectedStudent.set(student),
+      error: () =>
+        this.snackBar.open('Error Viewing Student', 'Close', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'bottom',
+          panelClass: ['snack-error'],
+        }),
     });
   }
+
+  onSearchChange(event: any) {
+    const keyword = event.target.value.trim();
+    this.searchText.set(keyword);
+
+    if (!keyword) {
+      this.loadStudents(); // reset to a normal list
+      return;
+    }
+
+    this.studentService.search(keyword).subscribe(res => {
+      this.students.set(res);
+    });
+  }
+
 }

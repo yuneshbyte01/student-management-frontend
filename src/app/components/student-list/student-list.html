@@ -8,6 +8,17 @@
     <i class="bi bi-person-fill-add fs-5"></i>
   </button>
 
+  <div class="input-group mb-3">
+  <span class="input-group-text bg-primary text-white rounded-start">
+    <i class="bi bi-search"></i>
+  </span>
+
+    <input type="text"
+           class="form-control rounded-end"
+           placeholder="Search students..."
+           (input)="onSearchChange($event)">
+  </div>
+
   <table class="table table-bordered table-hover text-center align-middle mt-3">
     <thead class="table-light">
     <tr>
@@ -42,9 +53,11 @@
           <i class="bi bi-person-x-fill fs-6"></i>
         </button>
 
-        <!-- View -->
+        <!-- View (FIXED) -->
         <button (click)="viewStudent(s.id)"
-                class="btn btn-warning btn-sm mb-2 px-3 py-1 rounded">
+                class="btn btn-warning btn-sm mb-2 px-3 py-1 rounded"
+                data-bs-toggle="modal"
+                data-bs-target="#studentDetailsModal">
           <i class="bi bi-eye-fill fs-6"></i>
         </button>
 
@@ -52,6 +65,7 @@
     </tr>
     </tbody>
   </table>
+
 
   <!-- Student Details Modal -->
   <div class="modal fade" id="studentDetailsModal" tabindex="-1">
@@ -82,11 +96,13 @@
     </div>
   </div>
 
+
   <!-- Delete Modal -->
   <div class="modal fade" id="deleteModal"
        data-bs-backdrop="static"
        data-bs-keyboard="false"
-       tabindex="-1">
+       tabindex="-1"
+       aria-modal="true">
 
     <div class="modal-dialog">
       <div class="modal-content rounded">
@@ -121,4 +137,5 @@
       </div>
     </div>
   </div>
+
 </div>
