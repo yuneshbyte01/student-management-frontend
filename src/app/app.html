@@ -1,22 +1,11 @@
-<div class="header">
-  <h1>{{ title() }}</h1>
-</div>
+<app-navbar></app-navbar>
 
-<div class="content">
+<div class="content mt-4">
   <router-outlet></router-outlet>
 </div>
- <style>
-    .header {
-  text-align: center;
-  padding: 20px;
-  background-color: #4a90e2;
-  color: white;
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
 
-.content {
-  padding: 20px;
-}
- </style>
+<style>
+  .content {
+    padding: 20px;
+  }
+</style>
