@@ -81,6 +81,20 @@
         Address is required.
       </div>
 
+      <!-- DEPARTMENT -->
+      <label class="fw-semibold mt-2 mb-1">Department</label>
+      <select formControlName="department" class="form-select">
+        <option value="" disabled>Select department</option>
+        <option *ngFor="let d of departments" [value]="d.id">
+          {{ d.name }}
+        </option>
+      </select>
+
+      <div *ngIf="form.get('department')?.touched && form.get('department')?.invalid"
+           class="text-danger small mt-1 mb-2">
+        Department is required.
+      </div>
+
       <!-- COURSE -->
       <label class="fw-semibold mt-2 mb-1">Course</label>
       <select formControlName="course" class="form-select">

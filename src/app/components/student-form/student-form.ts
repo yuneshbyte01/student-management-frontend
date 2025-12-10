@@ -1,30 +1,41 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StudentService } from '../../services/student';
+import { DepartmentService } from '../../services/department';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {NgIf} from '@angular/common';
+import { NgIf, NgFor } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-student-form',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf],
+  imports: [ReactiveFormsModule, NgIf, NgFor],
   templateUrl: './student-form.html'
 })
 export class StudentForm implements OnInit {
 
   form!: FormGroup;
+  departments: any[] = [];
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private studentService: StudentService,
+    private departmentService: DepartmentService,
     private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
+    this.loadDepartments();
     this.buildForm();
+  }
+
+  loadDepartments() {
+    this.departmentService.getAll().subscribe({
+      next: (res) => this.departments = res,
+      error: () => console.error("Failed to load departments")
+    });
   }
 
   private buildForm() {
@@ -36,14 +47,14 @@ export class StudentForm implements OnInit {
       gender: ['', Validators.required],
       dob: ['', Validators.required],
       address: ['', Validators.required],
-      course: ['', Validators.required]
+      course: ['', Validators.required],
+      department: ['', Validators.required]
     });
 
     const id = this.route.snapshot.params['id'];
 
     if (id) {
       this.studentService.getById(id).subscribe((data: any) => {
-
         const formattedDob = data.dob ? data.dob.substring(0, 10) : '';
 
         this.form.patchValue({
@@ -54,18 +65,27 @@ export class StudentForm implements OnInit {
           gender: data.gender,
           dob: formattedDob,
           address: data.address,
-          course: data.course
+          course: data.course,
+          department: data.department?.id
         });
       });
     }
   }
 
-    saveStudent() {
+  saveStudent() {
     let studentData = this.form.value;
+    const deptId = studentData.department;
+
+    if (!deptId) {
+      this.snackBar.open("Please select a department", "Close", { duration: 2500 });
+      return;
+    }
+
+    delete studentData.department;
 
     // UPDATE
     if (studentData.id) {
-      this.studentService.update(studentData.id, studentData)
+      this.studentService.update(studentData.id, studentData, deptId)
         .subscribe({
           next: () => {
             this.snackBar.open('Student updated successfully!', 'Close', {
@@ -86,10 +106,12 @@ export class StudentForm implements OnInit {
           }
         });
     }
+
     // CREATE
     else {
       delete studentData.id;
-      this.studentService.create(studentData)
+
+      this.studentService.create(studentData, deptId)
         .subscribe({
           next: () => {
             this.snackBar.open('Student created successfully!', 'Close', {
@@ -108,7 +130,6 @@ export class StudentForm implements OnInit {
               verticalPosition: 'bottom',
               panelClass: ['snack-error'],
             });
-
           }
         });
     }

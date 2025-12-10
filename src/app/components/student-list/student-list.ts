@@ -1,14 +1,14 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { StudentService } from '../../services/student';
 import { RouterModule } from '@angular/router';
-import {DatePipe, NgFor} from '@angular/common';
+import {DatePipe, NgFor, NgIf} from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-student-list',
   standalone: true,
-  imports: [NgFor, RouterModule, DatePipe, MatPaginatorModule],
+  imports: [NgFor, NgIf, RouterModule, DatePipe, MatPaginatorModule],
   templateUrl: './student-list.html'
 })
 

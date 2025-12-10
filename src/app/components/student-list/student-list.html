@@ -28,7 +28,7 @@
       <th>Name</th>
       <th>Email</th>
       <th>Gender</th>
-      <th>Course</th>
+      <th>Department</th>
       <th>Actions</th>
     </tr>
     </thead>
@@ -39,7 +39,7 @@
       <td>{{ s.name }}</td>
       <td>{{ s.email }}</td>
       <td>{{ s.gender }}</td>
-      <td>{{ s.course }}</td>
+      <td>{{ s.department?.name }}</td>
 
       <td>
         <!-- Edit -->
@@ -87,6 +87,7 @@
           <p><strong>Date of Birth:</strong> {{ selectedStudent()?.dob | date }}</p>
           <p><strong>Address:</strong> {{ selectedStudent()?.address }}</p>
           <p><strong>Course:</strong> {{ selectedStudent()?.course }}</p>
+          <p><strong>Department:</strong> {{ selectedStudent()?.department?.name }}</p>
         </div>
 
         <div class="modal-footer">

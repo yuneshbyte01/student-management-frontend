@@ -22,13 +22,13 @@ export class StudentService {
   }
 
   // Create new student
-  create(student: any): Observable<any> {
-    return this.http.post(this.baseUrl, student);
+  create(student: any, deptId: number): Observable<any> {
+    return this.http.post(`${this.baseUrl}?deptId=${deptId}`, student);
   }
 
   // Update student
-  update(id: number, student: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/${id}`, student);
+  update(id: number, student: any, deptId: number): Observable<any> {
+    return this.http.put(`${this.baseUrl}/${id}?deptId=${deptId}`, student);
   }
 
   // Delete student
