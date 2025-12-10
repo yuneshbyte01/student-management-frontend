@@ -3,11 +3,12 @@ import { StudentService } from '../../services/student';
 import { RouterModule } from '@angular/router';
 import {DatePipe, NgFor} from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-student-list',
   standalone: true,
-  imports: [NgFor, RouterModule, DatePipe],
+  imports: [NgFor, RouterModule, DatePipe, MatPaginatorModule],
   templateUrl: './student-list.html'
 })
 
@@ -30,7 +31,7 @@ export class StudentList implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.loadPage(0);
+    this.loadStudents();
   }
 
   loadStudents() {
@@ -39,19 +40,13 @@ export class StudentList implements OnInit {
         this.students.set(res.content);
         this.totalPages = res.totalPages;
         this.totalElements = res.totalElements;
-
-        // Generate page numbers: [0,1,2,...]
-        this.pages = Array.from({ length: this.totalPages }, (_, i) => i);
-      },
-      error: (error) => {
-        console.error(error);
-        alert('Error loading students');
       }
     });
   }
 
-  loadPage(pageIndex: number) {
-    this.page = pageIndex;
+  onPageChange(event: any) {
+    this.size = event.pageSize;
+    this.page = event.pageIndex;
     this.loadStudents();
   }
 
@@ -60,16 +55,22 @@ export class StudentList implements OnInit {
     this.searchText.set(keyword);
 
     if (!keyword) {
-      this.page = 0;   // RESET PAGE
+      this.page = 0;
       this.loadStudents();
       return;
     }
 
-    this.studentService.search(keyword).subscribe(res => {
-      this.students.set(res);
-      this.totalElements = res.length;
-      this.totalPages = 1;
-      this.pages = [0];
+    this.studentService.search(keyword).subscribe({
+      next: (res) => {
+        this.students.set(res);
+        this.totalElements = res.length;
+      },
+      error: () => {
+        this.snackBar.open("Search failed!", "Close", {
+          duration: 2000,
+          panelClass: ['snack-error']
+        });
+      }
     });
   }
 

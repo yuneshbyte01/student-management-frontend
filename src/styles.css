@@ -28,3 +28,16 @@
   color: white !important;
   font-weight: bold;
 }
+
+.mat-mdc-select-panel {
+  background-color: #ffffff !important;
+}
+
+.mat-mdc-option {
+  background-color: #ffffff !important;
+  color: #000 !important;
+}
+
+.mat-mdc-option:hover {
+  background-color: #f1f1f1 !important;
+}
