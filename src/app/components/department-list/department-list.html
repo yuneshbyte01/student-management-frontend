@@ -1,0 +1,95 @@
+<div class="container mt-4 p-4 bg-white rounded shadow">
+
+  <h2 class="text-center mb-4">Department List</h2>
+
+  <!-- Add Button -->
+  <button routerLink="/departments/add"
+          class="btn btn-success mb-3 px-3 py-2 rounded">
+    <i class="bi bi-building-add fs-5"></i>
+  </button>
+
+  <!-- TABLE -->
+  <table class="table table-bordered table-hover text-center align-middle mt-3">
+    <thead class="table-light">
+    <tr>
+      <th>ID</th>
+      <th>Department Name</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let d of departments()">
+      <td>{{ d.id }}</td>
+      <td>{{ d.name }}</td>
+
+      <td>
+
+        <!-- Edit Button -->
+        <button [routerLink]="['/departments/edit', d.id]"
+                class="btn btn-primary btn-sm me-2 mb-2 px-3 py-1 rounded">
+          <i class="bi bi-pencil-fill fs-6"></i>
+        </button>
+
+        <!-- Delete Button -->
+        <button (click)="selectDepartmentForDelete(d.id)"
+                class="btn btn-danger btn-sm mb-2 px-3 py-1 rounded"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteDepartmentModal">
+          <i class="bi bi-trash-fill fs-6"></i>
+        </button>
+
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="departments().length === 0"
+       class="text-center text-muted mt-3">
+    No departments found.
+  </div>
+
+</div>
+
+<!-- DELETE MODAL -->
+<div class="modal fade" id="deleteDepartmentModal"
+     tabindex="-1"
+     data-bs-backdrop="static"
+     data-bs-keyboard="false">
+
+  <div class="modal-dialog">
+    <div class="modal-content rounded">
+
+      <div class="modal-header bg-light">
+        <h5 class="modal-title fs-5">Confirm Delete</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body text-center">
+        <p class="fw-bold">
+          Are you sure you want to delete the department
+          <strong>{{ selectedDepartment()?.name }}</strong>?
+        </p>
+        <p class="text-danger">This action cannot be undone.</p>
+      </div>
+
+      <div class="modal-footer">
+
+        <button type="button"
+                class="btn btn-outline-secondary px-4 py-2 rounded"
+                data-bs-dismiss="modal">
+          Cancel
+        </button>
+
+        <button (click)="confirmDelete()"
+                type="button"
+                class="btn btn-danger px-4 py-2 rounded"
+                data-bs-dismiss="modal">
+          Delete
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+</div>
