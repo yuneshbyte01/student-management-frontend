@@ -23,7 +23,8 @@ export class StudentList implements OnInit {
   totalPages = 0;
   totalElements = 0;
 
-  pages: number[] = [];
+  isSearching = signal(false);
+  searchResults = signal<any[]>([]);
 
   constructor(
     private studentService: StudentService,
@@ -47,7 +48,17 @@ export class StudentList implements OnInit {
   onPageChange(event: any) {
     this.size = event.pageSize;
     this.page = event.pageIndex;
-    this.loadStudents();
+
+    if (this.isSearching()) {
+      const start = this.page * this.size;
+      const end = start + this.size;
+
+      this.students.set(
+        this.searchResults().slice(start, end)
+      );
+    } else {
+      this.loadStudents();
+    }
   }
 
   onSearchChange(event: any) {
@@ -55,21 +66,26 @@ export class StudentList implements OnInit {
     this.searchText.set(keyword);
 
     if (!keyword) {
+      this.isSearching.set(false);
       this.page = 0;
       this.loadStudents();
       return;
     }
 
+    this.isSearching.set(true);
+
     this.studentService.search(keyword).subscribe({
       next: (res) => {
-        this.students.set(res);
+        this.searchResults.set(res);
         this.totalElements = res.length;
-      },
-      error: () => {
-        this.snackBar.open("Search failed!", "Close", {
-          duration: 2000,
-          panelClass: ['snack-error']
-        });
+
+        // always reset to page 0 when new search happens
+        this.page = 0;
+
+        // show first 10 search results
+        this.students.set(
+          res.slice(0, this.size)
+        );
       }
     });
   }
