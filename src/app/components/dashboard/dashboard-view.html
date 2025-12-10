@@ -1,0 +1,87 @@
+<div class="container mt-4">
+
+  <h2 class="text-center mb-4 fw-bold">Dashboard</h2>
+
+  <!-- TOP STAT CARDS -->
+  <div class="row g-4 mb-4">
+
+    <!-- TOTAL STUDENTS -->
+    <div class="col-md-6">
+      <div class="card shadow-sm border-0 p-4 text-center bg-primary text-white">
+        <h4 class="fw-semibold">Total Students</h4>
+        <h2 class="fw-bold display-6">{{ totalStudents() }}</h2>
+      </div>
+    </div>
+
+    <!-- TOTAL DEPARTMENTS -->
+    <div class="col-md-6">
+      <div class="card shadow-sm border-0 p-4 text-center bg-success text-white">
+        <h4 class="fw-semibold">Total Departments</h4>
+        <h2 class="fw-bold display-6">{{ totalDepartments() }}</h2>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- QUICK ACTION CARDS -->
+  <div class="row g-4 mb-4">
+
+    <!-- Manage Students -->
+    <div class="col-md-6">
+      <a routerLink="/students" class="text-decoration-none">
+        <div class="card p-4 shadow-sm border-0 hover-card">
+          <h4 class="fw-semibold">
+            <i class="bi bi-people-fill me-2"></i>
+            Manage Students
+          </h4>
+        </div>
+      </a>
+    </div>
+
+    <!-- Manage Departments -->
+    <div class="col-md-6">
+      <a routerLink="/departments" class="text-decoration-none">
+        <div class="card p-4 shadow-sm border-0 hover-card">
+          <h4 class="fw-semibold">
+            <i class="bi bi-building me-2"></i>
+            Manage Departments
+          </h4>
+        </div>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- STUDENTS PER DEPARTMENT -->
+  <div class="card shadow-sm border-0 p-4">
+    <h4 class="fw-bold mb-3">Students Per Department</h4>
+
+    <table class="table table-bordered table-hover text-center align-middle">
+      <thead class="table-light">
+      <tr>
+        <th>Department</th>
+        <th>Total Students</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let d of studentsPerDept()">
+        <td>{{ d.department }}</td>
+        <td>{{ d.count }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<style>
+  .hover-card {
+    transition: 0.2s ease-in-out;
+  }
+
+  .hover-card:hover {
+    background-color: #f7f7f7;
+    transform: scale(1.02);
+  }
+</style>

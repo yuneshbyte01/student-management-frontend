@@ -1,0 +1,23 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DashboardService {
+
+  private baseUrl = "http://localhost:8080/dashboard";
+
+  constructor(private http: HttpClient) {}
+
+  // Get total students & departments
+  getStats(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/stats`);
+  }
+
+  // Get student count per department
+  getStudentsPerDepartment(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/students-per-department`);
+  }
+}
