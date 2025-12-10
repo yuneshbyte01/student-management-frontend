@@ -1,13 +1,13 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { DepartmentService } from '../../services/department';
 import { RouterModule } from '@angular/router';
-import { NgFor } from '@angular/common';
+import {NgFor, NgIf} from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-department-list',
   standalone: true,
-  imports: [NgFor, RouterModule],
+  imports: [NgFor, NgIf, RouterModule],
   templateUrl: './department-list.html'
 })
 export class DepartmentList implements OnInit {

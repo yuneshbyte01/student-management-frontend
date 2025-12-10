@@ -1,0 +1,89 @@
+<div class="container mt-4">
+  <div class="mx-auto p-4 bg-light rounded shadow-sm" style="max-width: 480px;">
+
+    <h2 class="text-center mb-3 text-dark">
+      {{ form.value.id ? 'Edit Course' : 'Add Course' }}
+    </h2>
+
+    <form [formGroup]="form" (ngSubmit)="saveCourse()">
+
+      <!-- COURSE NAME -->
+      <label class="fw-semibold mt-2 mb-1">Course Name</label>
+      <input formControlName="name"
+             class="form-control"
+             placeholder="Enter course name">
+
+      <div *ngIf="form.get('name')?.touched && form.get('name')?.invalid"
+           class="text-danger small mt-1 mb-2">
+        Course name is required.
+      </div>
+
+      <!-- DESCRIPTION -->
+      <label class="fw-semibold mt-2 mb-1">Description</label>
+      <textarea formControlName="description"
+                class="form-control"
+                placeholder="Enter course description"></textarea>
+
+      <div *ngIf="form.get('description')?.touched && form.get('description')?.invalid"
+           class="text-danger small mt-1 mb-2">
+        Description is required.
+      </div>
+
+      <!-- FEES -->
+      <label class="fw-semibold mt-2 mb-1">Fees (NPR)</label>
+      <input type="number"
+             formControlName="fees"
+             class="form-control"
+             placeholder="Enter course fees">
+
+      <div *ngIf="form.get('fees')?.touched && form.get('fees')?.invalid"
+           class="text-danger small mt-1 mb-2">
+        <span *ngIf="form.get('fees')?.errors?.['required']">Fees is required.</span>
+        <span *ngIf="form.get('fees')?.errors?.['min']">Fees must be at least 1000.</span>
+      </div>
+
+      <!-- DURATION -->
+      <label class="fw-semibold mt-2 mb-1">Duration</label>
+      <input formControlName="duration"
+             class="form-control"
+             placeholder="Ex: 4 months">
+
+      <div *ngIf="form.get('duration')?.touched && form.get('duration')?.invalid"
+           class="text-danger small mt-1 mb-2">
+        Duration is required.
+      </div>
+
+      <!-- DEPARTMENT SELECT -->
+      <label class="fw-semibold mt-2 mb-1">Department</label>
+      <select formControlName="departmentId" class="form-select">
+        <option value="" disabled>Select department</option>
+        <option *ngFor="let d of departments" [value]="d.id">
+          {{ d.name }}
+        </option>
+      </select>
+
+      <div *ngIf="form.get('departmentId')?.touched && form.get('departmentId')?.invalid"
+           class="text-danger small mt-1 mb-2">
+        Department is required.
+      </div>
+
+      <!-- BUTTONS -->
+      <div class="d-flex justify-content-between gap-2 mt-3">
+
+        <button type="submit"
+                [disabled]="form.invalid"
+                class="btn btn-primary w-50 py-2 fw-semibold">
+          {{ form.value.id ? 'Update' : 'Save' }}
+        </button>
+
+        <button type="button"
+                class="btn btn-danger w-50 py-2 fw-semibold"
+                (click)="cancel()">
+          Cancel
+        </button>
+
+      </div>
+
+    </form>
+  </div>
+</div>

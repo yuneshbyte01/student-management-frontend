@@ -1,0 +1,132 @@
+<div class="container mt-4 p-4 bg-white rounded shadow">
+
+  <h2 class="text-center mb-4">Course List</h2>
+
+  <!-- Add Course Button -->
+  <button routerLink="/courses/add"
+          class="btn btn-success mb-3 px-3 py-2 rounded">
+    <i class="bi bi-plus-circle-fill fs-5"></i>
+  </button>
+
+  <!-- TABLE -->
+  <table class="table table-bordered table-hover text-center align-middle mt-3">
+    <thead class="table-light">
+    <tr>
+      <th>ID</th>
+      <th>Course Name</th>
+      <th>Description</th>
+      <th>Fees</th>
+      <th>Duration</th>
+      <th>Department</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let c of courses()">
+      <td>{{ c.id }}</td>
+      <td>{{ c.name }}</td>
+      <td>{{ c.description }}</td>
+      <td>Rs. {{ c.fees }}</td>
+      <td>{{ c.duration }}</td>
+      <td>{{ c.department?.name }}</td>
+
+      <td>
+        <!-- Edit -->
+        <button [routerLink]="['/courses/edit', c.id]"
+                class="btn btn-primary btn-sm me-2 mb-2 px-3 py-1 rounded">
+          <i class="bi bi-pencil-fill"></i>
+        </button>
+
+        <!-- Delete -->
+        <button (click)="selectCourseForDelete(c.id)"
+                class="btn btn-danger btn-sm me-2 mb-2 px-3 py-1 rounded"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteModal">
+          <i class="bi bi-trash-fill"></i>
+        </button>
+
+        <!-- View Details -->
+        <button (click)="selectCourseForDelete(c.id)"
+                class="btn btn-warning btn-sm mb-2 px-3 py-1 rounded"
+                data-bs-toggle="modal"
+                data-bs-target="#courseDetailsModal">
+          <i class="bi bi-eye-fill"></i>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- VIEW DETAILS MODAL -->
+  <div class="modal fade" id="courseDetailsModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content rounded">
+
+        <div class="modal-header bg-light">
+          <h5 class="modal-title">Course Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+          <p><strong>ID:</strong> {{ selectedCourse()?.id }}</p>
+          <p><strong>Name:</strong> {{ selectedCourse()?.name }}</p>
+          <p><strong>Description:</strong> {{ selectedCourse()?.description }}</p>
+          <p><strong>Fees:</strong> Rs. {{ selectedCourse()?.fees }}</p>
+          <p><strong>Duration:</strong> {{ selectedCourse()?.duration }}</p>
+          <p><strong>Department:</strong> {{ selectedCourse()?.department?.name }}</p>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button"
+                  class="btn btn-secondary px-4 py-2 rounded"
+                  data-bs-dismiss="modal">
+            Close
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- DELETE CONFIRMATION MODAL -->
+  <div class="modal fade" id="deleteModal"
+       data-bs-backdrop="static"
+       data-bs-keyboard="false"
+       tabindex="-1">
+
+    <div class="modal-dialog">
+      <div class="modal-content rounded">
+
+        <div class="modal-header bg-light">
+          <h5 class="modal-title">Confirm Delete</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body text-center">
+          <p class="fw-bold">
+            Are you sure you want to delete
+            <strong>{{ selectedCourse()?.name }}</strong>?
+          </p>
+          <p class="text-danger">This action cannot be undone.</p>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button"
+                  class="btn btn-outline-secondary px-4 py-2 rounded"
+                  data-bs-dismiss="modal">
+            Cancel
+          </button>
+
+          <button (click)="confirmDelete()"
+                  type="button"
+                  class="btn btn-danger px-4 py-2 rounded">
+            Delete
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

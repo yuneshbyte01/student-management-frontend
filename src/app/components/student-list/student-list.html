@@ -86,7 +86,7 @@
           <p><strong>Gender:</strong> {{ selectedStudent()?.gender }}</p>
           <p><strong>Date of Birth:</strong> {{ selectedStudent()?.dob | date }}</p>
           <p><strong>Address:</strong> {{ selectedStudent()?.address }}</p>
-          <p><strong>Course:</strong> {{ selectedStudent()?.course }}</p>
+          <p><strong>Course:</strong> {{ selectedStudent()?.course?.name }}</p>
           <p><strong>Department:</strong> {{ selectedStudent()?.department?.name }}</p>
         </div>
 
